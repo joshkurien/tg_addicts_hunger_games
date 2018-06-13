@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  enum status: [:created, :registering, :allocated]
 
   def self.get_user(from_params)
     user = find_by_telegram_id(from_params[:id].to_i)
