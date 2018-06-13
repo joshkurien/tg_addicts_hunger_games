@@ -10,7 +10,10 @@ class CallParser
 
   private
   def self.start(chat)
-    TelegramClient.send_message(chat,Response.get_random_text(Response.keys[:welcome]))
+    TelegramClient.make_buttons(chat,
+                                (Response.get_random_text(Response.keys[:welcome]) +
+                                    "\nPlease dont change your Name during the event, once you have decided on a name. Please proceed"),
+                                [[Button::AGREE]])
   end
 
   def self.default_response(chat)
