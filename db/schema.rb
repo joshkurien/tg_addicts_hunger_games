@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_12_142249) do
+ActiveRecord::Schema.define(version: 2018_06_13_170229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "responses", force: :cascade do |t|
+    t.integer "key"
+    t.string "text"
+    t.index ["key"], name: "index_responses_on_key"
+  end
 
   create_table "users", force: :cascade do |t|
     t.integer "telegram_id"
