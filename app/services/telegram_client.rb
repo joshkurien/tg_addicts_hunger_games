@@ -2,7 +2,6 @@ class TelegramClient
 
   def self.send_message(chat,message)
     url = "#{Figaro.env.telegram_base_url}/sendMessage"
-    puts 'weeeee'
     RestClient.post(url, {chat_id: chat, text: message})
   end
 

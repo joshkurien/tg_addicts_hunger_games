@@ -22,6 +22,7 @@ gem 'puma', '~> 3.11'
 gem 'figaro'
 gem 'pry-rails'
 gem 'rest-client'
+gem 'seed_migration'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -129,6 +129,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     ruby_dep (1.5.0)
+    seed_migration (1.2.3)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -165,6 +166,7 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.0)
   rest-client
+  seed_migration
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
