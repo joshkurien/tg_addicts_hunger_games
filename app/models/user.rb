@@ -30,14 +30,14 @@ class User < ActiveRecord::Base
   end
 
   def allocate_district
-    district_weights = Array.new(District.count, 0)
+    district_weights = Array.new(District.count + 1, 0)
     max_value = 0
 
     status_metadata['intro_questions'].each do |question, district|
       return false if district.nil?
-      district_weights[district - 1] += 1
-      if district_weights[district - 1] > max_value
-        max_value = district_weights[district - 1]
+      district_weights[district] += 1
+      if district_weights[district] > max_value
+        max_value = district_weights[district]
       end
     end
 
