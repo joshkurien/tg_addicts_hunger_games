@@ -1,10 +1,11 @@
 class AddDistricts < SeedMigration::Migration
   def up
-    District.create(name: 'Fisherman district', symbol: '🐟')
-    District.create(name: 'Labor district', symbol: '⚒')
-    District.create(name: 'Power district', symbol: '⚡️')
-    District.create(name: 'Nature district', symbol: '🦋')
-    District.create(name: 'Luxury district', symbol: '💎')
+    District.destroy_all
+    District.create(id: 1, name: 'Fisherman district', symbol: '🐟')
+    District.create(id: 2, name: 'Labor district', symbol: '⚒')
+    District.create(id: 3, name: 'Power district', symbol: '⚡️')
+    District.create(id: 4, name: 'Nature district', symbol: '🦋')
+    District.create(id: 5, name: 'Luxury district', symbol: '💎')
   end
 
   def down

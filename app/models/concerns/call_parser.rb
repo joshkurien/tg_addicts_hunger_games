@@ -1,10 +1,14 @@
 class CallParser
-  def self.process(message,user)
+  def self.process(message)
+    user = User.get_user(message[:from])
+
     case message[:text]
       when '/start'
         start(user.telegram_id)
       when Button::AGREE
         UserFlow.process_registration(message[:from],user)
+      when Button::START
+        UserFlow.intro_questions(user)
       else
         default_response(message[:chat][:id])
     end
