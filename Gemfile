@@ -24,8 +24,6 @@ gem 'pry-rails'
 gem 'rest-client'
 gem 'seed_migration'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -43,6 +41,9 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
 end
 
 
