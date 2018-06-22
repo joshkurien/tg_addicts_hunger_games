@@ -26,7 +26,6 @@ default: &default
 
 development:
   <<: *default
-  database: addicts_bot_development
 test:
   <<: *default
   database: addicts_bot_test
