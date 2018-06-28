@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  enum status: [:created, :registered, :intro_question, :allocated]
+  enum status: [:created, :registered, :intro_question, :allocated, :adding_text]
 
   belongs_to :district, optional: true
 
@@ -20,6 +20,29 @@ class User < ActiveRecord::Base
 
     allocate_district
   end
+
+  def admin_actions
+    return unless check_admin
+
+    TelegramClient.make_buttons(telegram_id,
+                                'Have fun Tinkering',
+                                [[Button::ADMIN_TEXT],[Button::ADMIN_DISTRICT_QUESTION]])
+  end
+
+  def check_admin
+    unless is_admin?
+      TelegramClient.send_message(telegram_id,
+                                  Response.get_random_text(:smart_ass))
+      return false
+    end
+    true
+  end
+
+  def restore_status
+    self.status = status_metadata['previous_status']
+    save!
+  end
+
 
   private
   def self.register_user(info)
@@ -54,6 +77,7 @@ class User < ActiveRecord::Base
 
     allocated!
 
-    TelegramClient.send_message(telegram_id, "Congrats you're in #{self.district.name} #{self.district.symbol}")
+    TelegramClient.send_message(telegram_id,
+                                "Congrats you're in #{self.district.name} #{self.district.symbol}")
   end
 end

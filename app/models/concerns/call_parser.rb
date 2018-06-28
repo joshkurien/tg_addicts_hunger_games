@@ -5,11 +5,16 @@ class CallParser
     case message[:text]
       when '/start'
         start(user.telegram_id)
+      when '/admin'
+        user.admin_actions
       when Button::AGREE
         UserFlow.process_registration(message[:from],user)
       when Button::START
         UserFlow.intro_questions(user)
+      when Button::ADMIN_TEXT
+        AdminAction.add_text_prompt(user)
       else
+        return if AdminAction.evaluate_text(user,message[:text])
         default_response(message[:chat][:id])
     end
   end
