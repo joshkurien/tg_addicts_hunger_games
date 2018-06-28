@@ -6,9 +6,14 @@ class CallbackParser
                                          callback[:message][:message_id],
                                          'Thank you')
     rescue
-      TelegramClient.send_message(user.telegram_id,"Calm down please")
+      TelegramClient.send_message(user.telegram_id, "Calm down please")
     end
 
-    user.intro_answer(eval(callback[:data]))
+    callback_data = eval(callback[:data])
+
+    case callback_data[:type]
+      when IntroQuestion::CALLBACK_TYPE
+        user.intro_answer(callback_data)
+    end
   end
 end
