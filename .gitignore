@@ -24,3 +24,5 @@
 
 /.idea/
 /.rbenv-gemsets
+vendor
+config/deploy

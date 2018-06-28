@@ -15,6 +15,8 @@ set :puma_threads,    [4, 16]
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/joshkurien/addicts_bot"
+set :puma_conf, "#{shared_path}/config/puma.rb"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -24,7 +26,7 @@ set :deploy_to, "/home/joshkurien/addicts_bot"
 # set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
 
 # Default value for :pty is false
-# set :pty, true
+set :pty, true
 
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml"
