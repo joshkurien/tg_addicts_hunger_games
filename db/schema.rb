@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_15_152639) do
+ActiveRecord::Schema.define(version: 2018_06_28_163444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2018_06_15_152639) do
     t.integer "status", default: 0
     t.jsonb "status_metadata"
     t.bigint "district_id"
+    t.boolean "is_admin", default: false
     t.index ["district_id"], name: "index_users_on_district_id"
   end
 
