@@ -7,6 +7,8 @@ class CallParser
         start(user.telegram_id)
       when '/admin'
         user.admin_actions
+      when '/update_info'
+        user.update_self(message[:from])
       when Button::AGREE
         UserFlow.process_registration(message[:from],user)
       when Button::START
@@ -25,7 +27,7 @@ class CallParser
   def self.start(chat)
     TelegramClient.make_buttons(chat,
                                 (Response.get_random_text(Response.keys[:welcome]) +
-                                    "\nPlease dont change your Name during the event, once you have decided on a name. Please proceed"),
+                                    "\nPlease note that if you happen to change your name during the course of this event you will need to /update_info"),
                                 [[Button::AGREE]])
   end
 

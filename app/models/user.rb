@@ -43,6 +43,13 @@ class User < ActiveRecord::Base
     save!
   end
 
+  def update_self(info)
+    update(username: info[:username],
+           first_name: info[:first_name], last_name: info[:last_name],
+           language: info[:language_code])
+    TelegramClient.send_message(telegram_id,
+                                "Hi #{first_name} #{last_name}, your name information has been succesfully updated")
+  end
 
   private
   def self.register_user(info)
