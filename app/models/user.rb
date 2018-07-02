@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  enum status: [:created, :registered, :intro_question, :allocated, :adding_text]
+  enum status: [:created, :registered, :intro_question, :allocated, :adding_text, :adding_intro_question]
 
   belongs_to :district, optional: true
 

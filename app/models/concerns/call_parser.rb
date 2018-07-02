@@ -13,6 +13,8 @@ class CallParser
         UserFlow.intro_questions(user)
       when Button::ADMIN_TEXT
         AdminAction.add_text_prompt(user)
+      when Button::ADMIN_DISTRICT_QUESTION
+        AdminAction.add_intro_question(user)
       else
         return if AdminAction.evaluate_text(user,message[:text])
         default_response(message[:chat][:id])
