@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   enum status: [:created, :registered, :intro_question, :allocated, :adding_text, :adding_intro_question]
 
+  validates_presence_of :telegram_id
   belongs_to :district, optional: true
 
   def self.get_user(from_params)
