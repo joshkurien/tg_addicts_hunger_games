@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_28_163444) do
+ActiveRecord::Schema.define(version: 2018_07_06_173452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,16 @@ ActiveRecord::Schema.define(version: 2018_06_28_163444) do
   create_table "districts", force: :cascade do |t|
     t.string "name"
     t.string "symbol"
+  end
+
+  create_table "game_scores", force: :cascade do |t|
+    t.bigint "ww_game_id"
+    t.bigint "user_id"
+    t.boolean "alive"
+    t.boolean "won"
+    t.integer "score", default: 0
+    t.index ["user_id"], name: "index_game_scores_on_user_id"
+    t.index ["ww_game_id"], name: "index_game_scores_on_ww_game_id"
   end
 
   create_table "intro_question_options", force: :cascade do |t|
@@ -58,6 +68,14 @@ ActiveRecord::Schema.define(version: 2018_06_28_163444) do
     t.bigint "district_id"
     t.boolean "is_admin", default: false
     t.index ["district_id"], name: "index_users_on_district_id"
+  end
+
+  create_table "ww_games", force: :cascade do |t|
+    t.integer "bot"
+    t.datetime "game_time"
+    t.integer "player_count"
+    t.time "duration"
+    t.index ["game_time"], name: "index_ww_games_on_game_time", unique: true
   end
 
   add_foreign_key "users", "districts"
