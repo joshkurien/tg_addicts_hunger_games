@@ -26,7 +26,6 @@ class AdminAction
 
 
   def self.evaluate_text(user,text)
-    return unless user.check_admin
 
     if user.adding_text?
       Response.create(key: user.status_metadata['editing_response'],
