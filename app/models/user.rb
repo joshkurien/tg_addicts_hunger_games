@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :telegram_id
   belongs_to :district, optional: true
+  has_many :game_scores
 
   def self.get_user(from_params)
     user = find_by_telegram_id(from_params[:id].to_i)

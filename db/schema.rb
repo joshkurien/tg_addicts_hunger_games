@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_06_173452) do
+ActiveRecord::Schema.define(version: 2018_07_07_170417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,12 @@ ActiveRecord::Schema.define(version: 2018_07_06_173452) do
     t.datetime "migrated_on"
   end
 
+  create_table "unknown_user_records", force: :cascade do |t|
+    t.bigint "game_score_id"
+    t.string "name"
+    t.index ["game_score_id"], name: "index_unknown_user_records_on_game_score_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.integer "telegram_id"
     t.string "username"
@@ -67,6 +73,7 @@ ActiveRecord::Schema.define(version: 2018_07_06_173452) do
     t.jsonb "status_metadata"
     t.bigint "district_id"
     t.boolean "is_admin", default: false
+    t.string "full_name"
     t.index ["district_id"], name: "index_users_on_district_id"
   end
 
