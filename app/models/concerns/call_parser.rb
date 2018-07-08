@@ -19,8 +19,7 @@ class CallParser
         AdminAction.add_intro_question(user)
       else
         if user.is_admin?
-          AdminAction.evaluate_text(user,message[:text])
-          return
+          return if AdminAction.evaluate_text(user,message[:text])
         end
         default_response(message[:chat][:id])
     end

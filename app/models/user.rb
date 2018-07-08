@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   belongs_to :district, optional: true
   has_many :game_scores
 
+  before_save :set_full_name
+
   def self.get_user(from_params)
     user = find_by_telegram_id(from_params[:id].to_i)
     return user unless user.nil?
@@ -50,7 +52,8 @@ class User < ActiveRecord::Base
            first_name: info[:first_name], last_name: info[:last_name],
            language: info[:language_code])
     TelegramClient.send_message(telegram_id,
-                                "Hi #{first_name} #{last_name}, your name information has been succesfully updated")
+                                "Hi #{full_name}, your name information has been succesfully updated")
+    UnknownUserRecord.update_unknown(self.full_name, self.id)
   end
 
   private
@@ -88,5 +91,13 @@ class User < ActiveRecord::Base
 
     TelegramClient.send_message(telegram_id,
                                 "Congrats you're in #{self.district.name} #{self.district.symbol}")
+  end
+
+  def set_full_name
+    if last_name.blank?
+      self.full_name = first_name
+    else
+      self.full_name = first_name + ' ' + last_name
+    end
   end
 end

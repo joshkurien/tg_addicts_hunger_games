@@ -1,5 +1,6 @@
 class WwGame < ActiveRecord::Base
-  has_many :game_scores
+  has_many :game_scores, dependent: :destroy
+
   validates_uniqueness_of :game_time
 
   def parse_game(message)
