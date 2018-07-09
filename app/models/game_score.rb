@@ -16,6 +16,7 @@ class GameScore < ActiveRecord::Base
     self.ww_game_id = game_id
     self.alive = (life_stat == ALIVE)
     self.won = (victory_stat == WON)
+    self.name = username
     self.user = User.find_by_full_name(username)
 
     self.save!
