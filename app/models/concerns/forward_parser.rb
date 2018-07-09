@@ -13,6 +13,8 @@ class ForwardParser
         TelegramClient.send_message(user.telegram_id,
                                     'Too slow')
       end
+    else
+      CallParser.process(message)
     end
   end
 end

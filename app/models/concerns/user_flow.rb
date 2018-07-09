@@ -7,7 +7,7 @@ class UserFlow
                  username: message_details[:username],
                  status: User.statuses[:registered])
     TelegramClient.make_buttons(user.telegram_id,
-                                ("Thanks you, Kindly do not change your display name for the duration of the event\nWith that, let us start our adventure!"),
+                                ("Thank you, If you ever change your display name. please remember to /update_info\nWith that, let us start our adventure!"),
                                 [[Button::START]])
   end
 
