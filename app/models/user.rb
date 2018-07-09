@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
 
     TelegramClient.make_buttons(telegram_id,
                                 'Have fun Tinkering',
-                                [[Button::ADMIN_TEXT],[Button::ADMIN_DISTRICT_QUESTION]])
+                                [[Button::ADMIN_TEXT], [Button::ADMIN_DISTRICT_QUESTION]])
   end
 
   def check_admin
@@ -48,12 +48,18 @@ class User < ActiveRecord::Base
   end
 
   def update_self(info)
-    update(username: info[:username],
-           first_name: info[:first_name], last_name: info[:last_name],
-           language: info[:language_code])
-    TelegramClient.send_message(telegram_id,
-                                "Hi #{full_name}, your name information has been succesfully updated")
-    UnknownUserRecord.update_unknown(self.full_name, self.id)
+    begin
+      update(username: info[:username],
+             first_name: info[:first_name], last_name: info[:last_name],
+             language: info[:language_code])
+      TelegramClient.send_message(telegram_id,
+                                  "Hi #{full_name}, your name information has been succesfully updated")
+      UnknownUserRecord.update_unknown(self.full_name, self.id)
+    rescue ActiveRecord::RecordNotUnique
+      TelegramClient.send_message(telegram_id,
+                                  "Looks like your name is already taken")
+    end
+
   end
 
   private

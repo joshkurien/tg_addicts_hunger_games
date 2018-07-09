@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_09_191254) do
+ActiveRecord::Schema.define(version: 2018_07_09_194449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2018_07_09_191254) do
     t.boolean "is_admin", default: false
     t.string "full_name"
     t.index ["district_id"], name: "index_users_on_district_id"
+    t.index ["full_name"], name: "index_users_on_full_name", unique: true
   end
 
   create_table "ww_games", force: :cascade do |t|
