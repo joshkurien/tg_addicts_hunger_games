@@ -35,6 +35,8 @@ class CallParser
   end
 
   def self.default_response(chat)
-    TelegramClient.send_message(chat,Response.get_random_text(Response.keys[:spam]))
+    TelegramClient.make_buttons(chat,
+                                Response.get_random_text(Response.keys[:spam]),
+                                Button.default_buttons)
   end
 end

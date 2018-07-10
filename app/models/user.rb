@@ -95,8 +95,9 @@ class User < ActiveRecord::Base
 
     allocated!
 
-    TelegramClient.send_message(telegram_id,
-                                "Congrats you're in #{self.district.name} #{self.district.symbol}")
+    TelegramClient.make_buttons(telegram_id,
+                                "Congrats you're in #{self.district.name} #{self.district.symbol}",
+                                Button.default_buttons)
   end
 
   def set_full_name

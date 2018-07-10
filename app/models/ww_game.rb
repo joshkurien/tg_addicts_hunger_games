@@ -30,6 +30,6 @@ class WwGame < ActiveRecord::Base
   end
 
   def summary_string
-    "Game Time: 🕙 #{game_time} -> 👨‍👨‍👦‍👦 #{player_count} Players (Duration: #{duration}⌛)"
+    "🕙 #{game_time} 🕓 -> 👨‍👨‍👦‍👦 #{player_count} Players (⏳ Duration: #{duration}⏳)"
   end
 end
