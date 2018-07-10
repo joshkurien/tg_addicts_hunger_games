@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_09_194449) do
+ActiveRecord::Schema.define(version: 2018_07_10_145725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2018_07_09_194449) do
     t.integer "bot"
     t.datetime "game_time"
     t.integer "player_count"
-    t.time "duration"
+    t.string "duration"
     t.index ["game_time"], name: "index_ww_games_on_game_time", unique: true
   end
 

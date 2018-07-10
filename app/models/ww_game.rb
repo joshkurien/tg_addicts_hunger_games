@@ -12,7 +12,7 @@ class WwGame < ActiveRecord::Base
     game = message[:text].split("\n")
     self.player_count = game.shift.last.to_i
     game_duration = game.pop
-    self.duration = game_duration[/\d\d:\d\d:\d\d/].to_time
+    self.duration = game_duration[/\d\d:\d\d:\d\d/]
     self.bot = message[:forward_from][:id]
 
     self.save!
@@ -27,5 +27,9 @@ class WwGame < ActiveRecord::Base
     end
 
     true
+  end
+
+  def summary_string
+    "Game Time: 🕙 #{game_time} -> 👨‍👨‍👦‍👦 #{player_count} Players (Duration: #{duration}⌛)"
   end
 end

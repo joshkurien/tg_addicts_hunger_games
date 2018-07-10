@@ -100,4 +100,14 @@ class AdminAction
 
     false
   end
+
+  def view_battles(user,count = 10)
+    games = WwGame.order(id: :desc).limit(count)
+    message = "Summary of battles:\n"
+    games.each do |game|
+      message << game.summary_string + "\n"
+    end
+    TelegramClient.send_message(user.telegram_id,
+                                message)
+  end
 end

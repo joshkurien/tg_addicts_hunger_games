@@ -17,6 +17,8 @@ class CallParser
         AdminAction.add_text_prompt(user)
       when Button::ADMIN_DISTRICT_QUESTION
         AdminAction.add_intro_question(user)
+      when Button::ADMIN_LAST_10_GAMES
+        AdminAction.new.view_battles(user)
       else
         if user.is_admin?
           return if AdminAction.evaluate_text(user,message[:text])
