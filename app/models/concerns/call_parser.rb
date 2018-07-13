@@ -23,6 +23,8 @@ class CallParser
         AdminAction.add_intro_question(user)
       when Button::ADMIN_LAST_10_GAMES
         AdminAction.new.view_battles(user)
+      when Button::ADMIN_DISTRICT_DESC
+        AdminAction.new.district_description(user)
       else
         if user.is_admin?
           return if AdminAction.evaluate_text(user,message[:text])

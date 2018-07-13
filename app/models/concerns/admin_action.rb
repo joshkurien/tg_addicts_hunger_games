@@ -31,8 +31,20 @@ class AdminAction
       Response.create(key: user.status_metadata['editing_response'],
       text: text)
       user.restore_status
-      TelegramClient.send_message(user.telegram_id,
-      'Thanks for the fun message')
+      TelegramClient.make_buttons(user.telegram_id,
+                                  'Thanks for the fun message',
+                                  Button.default_buttons)
+      return true
+    end
+
+    if user.district_description?
+      district = user.district
+      district.description = text
+      district.save
+      user.restore_status
+      TelegramClient.make_buttons(user.telegram_id,
+                                  "#{district.symbol} Nice description, Victory to #{district.name} #{district.symbol}",
+                                  Button.default_buttons)
       return true
     end
 
@@ -99,6 +111,15 @@ class AdminAction
     end
 
     false
+  end
+
+  def district_description(user)
+    return unless user.check_admin
+    user.status_metadata['previous_status'] = user.status
+    user.district_description!
+
+    TelegramClient.send_message(user.telegram_id,
+                                'Please enter the new description for *your* district')
   end
 
   def view_battles(user,count = 10)

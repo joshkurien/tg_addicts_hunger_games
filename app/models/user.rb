@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  enum status: [:created, :registered, :intro_question, :allocated, :adding_text, :adding_intro_question]
+  enum status: [:created, :registered, :intro_question, :allocated, :adding_text, :adding_intro_question, :district_description]
 
   validates_presence_of :telegram_id
   belongs_to :district, optional: true
@@ -30,7 +30,8 @@ class User < ActiveRecord::Base
 
     TelegramClient.make_buttons(telegram_id,
                                 'Have fun Tinkering',
-                                [[Button::ADMIN_TEXT, Button::ADMIN_DISTRICT_QUESTION],[Button::ADMIN_LAST_10_GAMES]])
+                                [[Button::ADMIN_TEXT, Button::ADMIN_DISTRICT_QUESTION],
+                                 [Button::ADMIN_LAST_10_GAMES,Button::ADMIN_DISTRICT_DESC]])
   end
 
   def check_admin
