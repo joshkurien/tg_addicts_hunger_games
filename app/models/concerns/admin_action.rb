@@ -86,8 +86,9 @@ class AdminAction
                                       intro_question_id: user.status_metadata['intro_question_state']['question'],
                                       text: text)
           user.restore_status
-          TelegramClient.send_message(user.telegram_id,
-                                      'Thank you for the new question!')
+          TelegramClient.make_buttons(user.telegram_id,
+                                      'Thank you for the new question!',
+                                      Button.default_buttons)
           return true
       end
 
