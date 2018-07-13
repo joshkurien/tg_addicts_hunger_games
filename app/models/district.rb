@@ -17,6 +17,6 @@ class District < ActiveRecord::Base
   end
 
   def description_string
-    "#{self.description}\nTo join your district click [here](#{self.room_link})"
+    "#{self.description}\nTo join your district click [#{symbol}#{self.name}#{symbol}](#{self.room_link})"
   end
 end
