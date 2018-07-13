@@ -15,4 +15,8 @@ class District < ActiveRecord::Base
     end
     min_population[1]
   end
+
+  def description_string
+    "#{self.description}\nTo join your district click [here](#{self.room_link})"
+  end
 end

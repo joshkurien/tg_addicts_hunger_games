@@ -15,6 +15,8 @@ class CallParser
         UserFlow.intro_questions(user)
       when Button::VIEW_STATS
         user.view_stats
+      when Button::DISTRICT
+        user.view_district
       when Button::ADMIN_TEXT
         AdminAction.add_text_prompt(user)
       when Button::ADMIN_DISTRICT_QUESTION

@@ -72,6 +72,11 @@ class User < ActiveRecord::Base
     TelegramClient.send_message(self.telegram_id, message)
   end
 
+  def view_district
+   TelegramClient.send_message(self.telegram_id,
+                                self.district.description_string)
+  end
+
   private
   def self.register_user(info)
     User.create(username: info[:username], telegram_id: info[:id],
