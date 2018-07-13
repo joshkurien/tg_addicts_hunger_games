@@ -13,6 +13,8 @@ class CallParser
         UserFlow.process_registration(message[:from],user)
       when Button::START
         UserFlow.intro_questions(user)
+      when Button::VIEW_STATS
+        user.view_stats
       when Button::ADMIN_TEXT
         AdminAction.add_text_prompt(user)
       when Button::ADMIN_DISTRICT_QUESTION
@@ -35,8 +37,7 @@ class CallParser
   end
 
   def self.default_response(chat)
-    TelegramClient.make_buttons(chat,
-                                Response.get_random_text(Response.keys[:spam]),
-                                Button.default_buttons)
+    TelegramClient.send_message(chat,
+                                Response.get_random_text(Response.keys[:spam]))
   end
 end

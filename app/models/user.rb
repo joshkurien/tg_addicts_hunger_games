@@ -62,6 +62,16 @@ class User < ActiveRecord::Base
 
   end
 
+  def view_stats
+    games = self.game_scores.order(id: :desc)
+    message = "Summary of your games are as follows:\n"
+    games.each do |game|
+      message << game.summary_string + "\n"
+    end
+
+    TelegramClient.send_message(self.telegram_id, message)
+  end
+
   private
   def self.register_user(info)
     User.create(username: info[:username], telegram_id: info[:id],

@@ -1,8 +1,8 @@
 class TelegramClient
 
-  def self.send_message(chat,message)
+  def self.send_message(chat,message,parse_mode = 'Markdown')
     url = "#{Figaro.env.telegram_base_url}/sendMessage"
-    RestClient.post(url, {chat_id: chat, text: message})
+    RestClient.post(url, {chat_id: chat, text: message, parse_mode: parse_mode})
   end
 
   def self.make_buttons(chat,message,buttons, one_time = true, resize=true)
