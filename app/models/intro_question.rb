@@ -10,7 +10,7 @@ class IntroQuestion < ActiveRecord::Base
 
   def option_buttons
     buttons = []
-    intro_question_options.each do |option|
+    intro_question_options.order('random()').each do |option|
       buttons << [{text: option.text,
                    callback_data: "{type: '#{CALLBACK_TYPE}',question: #{self.id}, district: #{option.district_id}}"
                    }]
