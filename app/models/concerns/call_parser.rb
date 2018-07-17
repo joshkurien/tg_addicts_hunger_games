@@ -9,6 +9,10 @@ class CallParser
         user.admin_actions
       when '/update_info'
         user.update_self(message[:from])
+      when Button::BACK
+        TelegramClient.make_buttons(message[:chat][:id],
+                                    Response.get_random_text(Response.keys[:back]),
+                                    Button.default_buttons)
       when Button::AGREE
         UserFlow.process_registration(message[:from],user)
       when Button::START
