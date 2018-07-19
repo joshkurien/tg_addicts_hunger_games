@@ -5,11 +5,21 @@ class TelegramClient
     RestClient.post(url, {chat_id: chat, text: message, parse_mode: parse_mode})
   end
 
-  def self.make_buttons(chat,message,buttons, one_time = true, resize=true)
+  def self.make_buttons(chat,message,buttons, one_time = true, resize=true, parse_mode = 'Markdown')
     url = "#{Figaro.env.telegram_base_url}/sendMessage"
-    RestClient.post(url, {chat_id: chat, text: message, reply_markup: {keyboard: buttons,
-                                                                       resize_keyboard: resize,
-                                                                       one_time_keyboard: one_time}.to_json})
+    RestClient.post(url,
+                    {
+                        chat_id: chat,
+                        text: message,
+                        parse_mode: parse_mode,
+                        reply_markup:
+                            {
+                                keyboard: buttons,
+                                resize_keyboard: resize,
+                                one_time_keyboard: one_time
+                            }.to_json
+                    }
+    )
   end
 
   def self.make_inline_buttons(chat,message,buttons)
