@@ -113,7 +113,7 @@ class User < ActiveRecord::Base
     allocated!
 
     TelegramClient.make_buttons(telegram_id,
-                                "Congrats you're in [#{self.district.name} #{self.district.symbol}](#{self.district.room_link})'",
+                                "Congrats you're in #{self.district.name} #{self.district.symbol}",
                                 Button.default_buttons)
   end
 
