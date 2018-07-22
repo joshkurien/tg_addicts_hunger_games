@@ -89,9 +89,8 @@ class User < ActiveRecord::Base
 
   def view_district
     if self.district.present?
-      TelegramClient.make_buttons(self.telegram_id,
-                                  self.district.description_string,
-                                  Button.default_buttons)
+      TelegramClient.send_message(self.telegram_id,
+                                  self.district.description_string,)
       return
     end
     TelegramClient.send_message(self.telegram_id,
