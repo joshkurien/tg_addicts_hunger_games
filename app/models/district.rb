@@ -31,6 +31,21 @@ class District < ActiveRecord::Base
     min_population[1]
   end
 
+  def leaderboard
+    message = "Top Scorers for #{self.symbol} #{self.name} #{self.symbol} are:\n"
+
+    scores = []
+    users.each do |user|
+      scores << {name: user.full_name, score: user.total_score}
+    end
+    scores = scores.sort_by{|record| record[:score]}.reverse
+
+    scores.first(10).each do |score|
+      message << "#{score[:name]} => #{score[:score]}\n"
+    end
+    message
+  end
+
   def description_string
     "#{self.description}\nTo join your district click [#{symbol}#{self.name}#{symbol}](#{self.room_link})"
   end

@@ -64,6 +64,10 @@ class User < ActiveRecord::Base
 
   end
 
+  def total_score
+    self.game_scores.map(&:score).sum
+  end
+
   def view_stats
     games = self.game_scores.order(id: :desc)
     message = "Summary of your games are as follows:\n"
