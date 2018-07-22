@@ -45,6 +45,7 @@ class UserFlow
   def self.smart_alek(chat_id)
     TelegramClient.make_buttons(chat_id,
                                 Response.get_random_text(Response.keys[:smart_ass]),
-                                Button.default_buttons)
+                                Button.default_buttons,
+                                false)
   end
 end

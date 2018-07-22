@@ -129,7 +129,8 @@ class User < ActiveRecord::Base
 
     TelegramClient.make_buttons(telegram_id,
                                 "Congrats you're in #{self.district.name} #{self.district.symbol}",
-                                Button.default_buttons)
+                                Button.default_buttons,
+                                false)
   end
 
   def set_full_name

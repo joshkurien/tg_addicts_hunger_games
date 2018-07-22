@@ -12,7 +12,8 @@ class CallParser
       when Button::BACK
         TelegramClient.make_buttons(message[:chat][:id],
                                     Response.get_random_text(Response.keys[:back]),
-                                    Button.default_buttons)
+                                    Button.default_buttons,
+                                    false)
       when Button::AGREE
         UserFlow.process_registration(message[:from],user)
       when Button::START

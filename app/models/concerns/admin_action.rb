@@ -33,7 +33,8 @@ class AdminAction
       user.restore_status
       TelegramClient.make_buttons(user.telegram_id,
                                   'Thanks for the fun message',
-                                  Button.default_buttons)
+                                  Button.default_buttons,
+                                  false)
       return true
     end
 
@@ -44,7 +45,8 @@ class AdminAction
       user.restore_status
       TelegramClient.make_buttons(user.telegram_id,
                                   "#{district.symbol} Nice description, Victory to #{district.name} #{district.symbol}",
-                                  Button.default_buttons)
+                                  Button.default_buttons,
+                                  false)
       return true
     end
 
@@ -88,7 +90,8 @@ class AdminAction
           user.restore_status
           TelegramClient.make_buttons(user.telegram_id,
                                       'Thank you for the new question!',
-                                      Button.default_buttons)
+                                      Button.default_buttons,
+                                      false)
           return true
       end
 
