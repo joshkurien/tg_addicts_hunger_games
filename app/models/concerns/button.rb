@@ -11,8 +11,9 @@ class Button
 
   VIEW_STATS = '📊 My Games 📊'
   DISTRICT = '🏤 My District 🏤'
+  VIEW_SCORE = '✨My Score💫'
 
   def self.default_buttons
-    [[VIEW_STATS],[DISTRICT]]
+    [[VIEW_STATS,VIEW_SCORE],[DISTRICT]]
   end
 end

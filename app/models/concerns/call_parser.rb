@@ -19,6 +19,8 @@ class CallParser
         UserFlow.intro_questions(user)
       when Button::VIEW_STATS
         user.view_stats
+      when Button::VIEW_SCORE
+        user.view_score
       when Button::DISTRICT
         user.view_district
       when Button::ADMIN_TEXT
