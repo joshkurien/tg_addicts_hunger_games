@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
     TelegramClient.make_buttons(telegram_id,
                                 'Have fun Tinkering',
                                 [[Button::ADMIN_TEXT, Button::ADMIN_DISTRICT_QUESTION],
-                                 [Button::ADMIN_LAST_10_GAMES,Button::ADMIN_DISTRICT_DESC],
+                                 [Button::ADMIN_LAST_10_GAMES, Button::ADMIN_DISTRICT_DESC],
                                  [Button::BACK]])
   end
 
@@ -75,8 +75,13 @@ class User < ActiveRecord::Base
   end
 
   def view_district
-   TelegramClient.send_message(self.telegram_id,
-                                self.district.description_string)
+    if self.district.present?
+      TelegramClient.send_message(self.telegram_id,
+                                  self.district.description_string)
+      return
+    end
+    TelegramClient.send_message(self.telegram_id,
+                                'There seems to be a problem, please contact one of the admins')
   end
 
   private
