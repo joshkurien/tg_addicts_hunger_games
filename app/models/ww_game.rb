@@ -10,7 +10,7 @@ class WwGame < ActiveRecord::Base
       return false
     end
     game = message[:text].split("\n")
-    self.player_count = game.shift.last.to_i
+    self.player_count = game.shift[/\d+$/].to_i
     game_duration = game.pop
     self.duration = game_duration[/\d\d:\d\d:\d\d/]
     self.bot = message[:forward_from][:id]
