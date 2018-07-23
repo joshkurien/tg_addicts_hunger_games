@@ -15,13 +15,14 @@ class GameScore < ActiveRecord::Base
     self.ww_game_id = game_id
     self.alive = (life_stat == ALIVE)
     self.won = (victory_stat == WON)
-    self.name = username
-    self.user = User.find_by_full_name(username)
+    parsed_username = username.sub(/\ [🥇🥈🥉💎]+$/,'')
+    self.name = parsed_username
+    self.user = User.find_by_full_name(parsed_username)
     self.process_score
 
     self.save!
     if self.user.blank?
-      UnknownUserRecord.create!(game_score: self, name: username)
+      UnknownUserRecord.create!(game_score: self, name: parsed_username)
     end
   end
 
