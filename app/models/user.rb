@@ -82,9 +82,8 @@ class User < ActiveRecord::Base
 
   def view_score
     message = "So far you have amassed **#{self.total_score}** points.\nAll the best in your ventures!"
-    TelegramClient.make_buttons(self.telegram_id,
-                                message,
-                                Button.default_buttons)
+    TelegramClient.send_message(self.telegram_id,
+                                message)
   end
 
   def view_district
