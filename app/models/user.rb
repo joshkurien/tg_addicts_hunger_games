@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
                                 'Have fun Tinkering',
                                 [[Button::ADMIN_TEXT, Button::ADMIN_DISTRICT_QUESTION],
                                  [Button::ADMIN_LAST_10_GAMES, Button::ADMIN_DISTRICT_DESC],
+                                 [Button::ADMIN_DISTRICT_LEADERBOARD],
                                  [Button::BACK]])
   end
 

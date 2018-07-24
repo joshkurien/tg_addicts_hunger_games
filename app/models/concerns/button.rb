@@ -8,6 +8,7 @@ class Button
   ADMIN_DISTRICT_QUESTION = 'Add a question for Districts'
   ADMIN_LAST_10_GAMES = 'View last 10 games stored'
   ADMIN_DISTRICT_DESC = 'Change district description'
+  ADMIN_DISTRICT_LEADERBOARD = 'View District leaderboard'
 
   VIEW_STATS = '📊 My Games 📊'
   DISTRICT = '🏤 My District 🏤'

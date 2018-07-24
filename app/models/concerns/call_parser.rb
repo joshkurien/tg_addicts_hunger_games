@@ -32,6 +32,8 @@ class CallParser
         AdminAction.new.view_battles(user)
       when Button::ADMIN_DISTRICT_DESC
         AdminAction.new.district_description(user)
+      when Button::ADMIN_DISTRICT_LEADERBOARD
+        AdminAction.new.view_district_leaderboard(user)
       else
         if user.is_admin?
           return if AdminAction.evaluate_text(user,message[:text])

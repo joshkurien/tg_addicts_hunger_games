@@ -40,7 +40,7 @@ class District < ActiveRecord::Base
     end
     scores = scores.sort_by{|record| record[:score]}.reverse
 
-    scores.first(10).each do |score|
+    scores.first(15).each do |score|
       message << "#{score[:name]} => #{score[:score]}\n"
     end
     message

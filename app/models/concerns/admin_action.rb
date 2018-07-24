@@ -135,4 +135,16 @@ class AdminAction
     TelegramClient.send_message(user.telegram_id,
                                 message)
   end
+
+  def view_district_leaderboard(user)
+    return unless user.check_admin
+    district = user.district
+    if district.blank?
+      TelegramClient.send_message(user.telegram_id,
+                                  'You dont have a district you noob')
+      return
+    end
+    TelegramClient.send_message(user.telegram_id,
+                                district.leaderboard)
+  end
 end
