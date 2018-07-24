@@ -78,7 +78,8 @@ class User < ActiveRecord::Base
 
     TelegramClient.make_buttons(self.telegram_id,
                                 message,
-                                Button.default_buttons)
+                                Button.default_buttons,
+                                false)
   end
 
   def view_score
