@@ -1,6 +1,10 @@
 class UnknownUserRecord < ActiveRecord::Base
   belongs_to :game_score
 
+  def self.names
+    select(:name).distinct(:name).map(&:name)
+  end
+
   def self.update_unknown(name,user_id)
     records = where(name: name)
     records.each do |record|

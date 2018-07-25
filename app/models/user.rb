@@ -31,8 +31,8 @@ class User < ActiveRecord::Base
     TelegramClient.make_buttons(telegram_id,
                                 'Have fun Tinkering',
                                 [[Button::ADMIN_TEXT, Button::ADMIN_DISTRICT_QUESTION],
-                                 [Button::ADMIN_LAST_10_GAMES, Button::ADMIN_DISTRICT_DESC],
-                                 [Button::ADMIN_DISTRICT_LEADERBOARD],
+                                 [Button::ADMIN_LAST_10_GAMES, Button::ADMIN_VIEW_MISSING_PLAYERS],
+                                 [Button::ADMIN_DISTRICT_LEADERBOARD, Button::ADMIN_DISTRICT_DESC],
                                  [Button::BACK]])
   end
 

@@ -34,6 +34,8 @@ class CallParser
         AdminAction.new.district_description(user)
       when Button::ADMIN_DISTRICT_LEADERBOARD
         AdminAction.new.view_district_leaderboard(user)
+      when Button::ADMIN_VIEW_MISSING_PLAYERS
+        AdminAction.new.view_unknown_names(user)
       else
         if user.is_admin?
           return if AdminAction.evaluate_text(user,message[:text])

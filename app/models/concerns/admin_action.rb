@@ -147,4 +147,12 @@ class AdminAction
     TelegramClient.send_message(user.telegram_id,
                                 district.leaderboard)
   end
+
+  def view_unknown_names(user)
+    name_list = UnknownUserRecord.names.each_slice(20).to_a
+    name_list.each do |list|
+      message = "List of unknown names so far:\n✴️ " + list.join("\n✴️ ")
+      TelegramClient.send_message(user.telegram_id, message)
+    end
+  end
 end
