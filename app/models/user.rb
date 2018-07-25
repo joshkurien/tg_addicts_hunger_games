@@ -71,15 +71,17 @@ class User < ActiveRecord::Base
 
   def view_stats
     games = self.game_scores.order(id: :desc)
-    message = "Summary of your games are as follows:\n"
+    message = []
     games.each do |game|
-      message << game.summary_string + "\n"
+      message << game.summary_string
     end
+    list = message.each_slice(25).to_a
 
-    TelegramClient.make_buttons(self.telegram_id,
-                                message,
-                                Button.default_buttons,
-                                false)
+    list.each do |set|
+      TelegramClient.send_message(self.telegram_id,
+                                  set.join("\n"),
+                                  nil)
+    end
   end
 
   def view_score
