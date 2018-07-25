@@ -9,10 +9,9 @@ class TelegramController < ApplicationController
         CallParser.process(params[:message])
       end
     rescue => e
-      TelegramClient.send_message(User.first.telegram_id,
-                                  ("Message from: #{ params[:message][:from][:first_name]}\nID: #{params[:message][:from][:id]}\n" +
-                                      "Message: #{params[:message][:text]}\n" +
-                                      "\nError message:\n" + e.message))
+      UserFlow.new.inform_super_admins("Message from: #{ params[:message][:from][:first_name]}\nID: #{params[:message][:from][:id]}\n" +
+                                           "Message: #{params[:message][:text]}\n" +
+                                           "\nError message:\n" + e.message)
     end
     render status: 200
   end
