@@ -152,7 +152,9 @@ class AdminAction
     name_list = UnknownUserRecord.names.each_slice(20).to_a
     name_list.each do |list|
       message = "List of unknown names so far:\n✴️ " + list.join("\n✴️ ")
-      TelegramClient.send_message(user.telegram_id, message)
+      TelegramClient.send_message(user.telegram_id,
+                                  message,
+                                  nil)
     end
   end
 end
