@@ -4,7 +4,7 @@ class District < ActiveRecord::Base
 
   POP_CAP_MAX_DIFFERENCE = 2
   def self.blocked
-    all_districts = District.all
+    all_districts = District.where.not(id: 0)
     smallest_district = District.find(least_populated_of(all_districts.map(&:id)))
     least_population = smallest_district.users.count
     blocked = []
