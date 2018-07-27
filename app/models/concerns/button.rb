@@ -12,10 +12,11 @@ class Button
   ADMIN_VIEW_MISSING_PLAYERS = 'Untracked player list'
 
   VIEW_STATS = '📊 My Games 📊'
+  VIEW_GAME_COUNT = '📈Game Count📈'
   DISTRICT = '🏤 My District 🏤'
   VIEW_SCORE = '✨My Score💫'
 
   def self.default_buttons
-    [[VIEW_STATS,VIEW_SCORE],[DISTRICT]]
+    [[VIEW_STATS,VIEW_SCORE],[VIEW_GAME_COUNT],[DISTRICT]]
   end
 end

@@ -22,6 +22,8 @@ class CallParser
         user.view_stats
       when Button::VIEW_SCORE
         user.view_score
+      when Button::VIEW_GAME_COUNT
+        user.view_game_count
       when Button::DISTRICT
         user.view_district
       when Button::ADMIN_TEXT
