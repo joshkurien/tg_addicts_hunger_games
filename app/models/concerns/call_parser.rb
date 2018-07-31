@@ -26,6 +26,8 @@ class CallParser
         user.view_game_count
       when Button::DISTRICT
         user.view_district
+      when Button::LEADERBOARD
+        user.view_leaderboard
       when Button::ADMIN_TEXT
         AdminAction.add_text_prompt(user)
       when Button::ADMIN_DISTRICT_QUESTION

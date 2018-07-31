@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
       TelegramClient.send_message(telegram_id,
                                   "Hi #{full_name}, your name information has been succesfully updated")
       UnknownUserRecord.update_unknown(self.full_name, self.id)
+      update_score
     rescue ActiveRecord::RecordNotUnique
       TelegramClient.send_message(telegram_id,
                                   "Looks like your name is already taken")
@@ -65,8 +66,12 @@ class User < ActiveRecord::Base
 
   end
 
+  def update_score
+    update(score: game_scores.map(&:score).sum)
+  end
+
   def total_score
-    self.game_scores.map(&:score).sum
+    score
   end
 
   def view_stats
@@ -85,7 +90,7 @@ class User < ActiveRecord::Base
   end
 
   def view_score
-    message = "So far you have amassed **#{self.total_score}** points.\nAll the best in your ventures!"
+    message = "So far you have amassed **#{self.score}** points.\nAll the best in your ventures!"
     TelegramClient.make_buttons(self.telegram_id,
                                 message,
                                 Button.default_buttons,
@@ -110,12 +115,55 @@ class User < ActiveRecord::Base
                                 'There seems to be a problem, please contact one of the admins')
   end
 
+  def update_ranks
+    users = User.order(score: :desc)
+    previous_score = users.first.score + 1
+    previous_rank = 0
+    same_rank_count = 0
+    users.each do |user|
+      if user.score == previous_score
+        user.rank = previous_rank
+        same_rank_count += 1
+      else
+        user.rank = previous_rank + same_rank_count + 1
+        previous_rank = user.rank
+        same_rank_count = 0
+        previous_score = user.score
+      end
+      user.save
+    end
+  end
+
+  def view_leaderboard(count = 30)
+    users = User.order(:rank)
+    position = users.find_index(self)
+
+    message = 'Leaderboard for this event is as follows:'
+    users.first(count).each do |user|
+      message << "\n\##{user.rank} #{user.full_name} -> #{user.score}"
+    end
+    if position >= count
+      position -= 1
+      message << "\n.\n.\n."
+      3.times do
+        message << "\n\##{users[position].rank} #{users[position].full_name} -> #{users[position].score}"
+        position += 1
+      end
+    end
+
+    TelegramClient.make_buttons(telegram_id,
+                                message,
+                                Button.default_buttons,
+                                false)
+  end
+
   private
   def self.register_user(info)
-    User.create(username: info[:username], telegram_id: info[:id],
+    user = User.create(username: info[:username], telegram_id: info[:id],
                 first_name: info[:first_name], last_name: info[:last_name],
                 is_bot: info[:is_bot], language: info[:language_code],
                 status_metadata: {})
+    user.update_score
   end
 
   def allocate_district

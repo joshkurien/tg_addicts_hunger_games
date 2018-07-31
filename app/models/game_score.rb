@@ -23,6 +23,8 @@ class GameScore < ActiveRecord::Base
     self.save!
     if self.user.blank?
       UnknownUserRecord.create!(game_score: self, name: parsed_username)
+    else
+      self.user.update_score
     end
   end
 

@@ -36,7 +36,7 @@ class District < ActiveRecord::Base
 
     scores = []
     users.each do |user|
-      scores << {name: user.full_name, score: user.total_score}
+      scores << {name: user.full_name, score: user.score}
     end
     scores = scores.sort_by{|record| record[:score]}.reverse
 
