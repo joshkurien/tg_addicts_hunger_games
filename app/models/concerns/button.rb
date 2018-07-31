@@ -15,7 +15,7 @@ class Button
   VIEW_GAME_COUNT = '📈Game Count📈'
   DISTRICT = '🏤 My District 🏤'
   VIEW_SCORE = '✨My Score💫'
-  LEADERBOARD = 'View Leaderboard'
+  LEADERBOARD = '📈View Leaderboard🌟'
 
   def self.default_buttons
     [[VIEW_STATS,VIEW_SCORE],[VIEW_GAME_COUNT,DISTRICT],[LEADERBOARD]]
