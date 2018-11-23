@@ -47,10 +47,10 @@ class UserFlow
     user = User.find(data[:user_id])
     case data[:accept]
       when false
-        inform_super_admins("#{user.full_name} refused to join capitol district")
+        inform_super_admins("#{user.full_name} refused to join capitol group")
       when true
-        inform_super_admins("#{user.full_name} Accepted the capitol district")
-        user.district = District.find(0)
+        inform_super_admins("#{user.full_name} Accepted the capitol group")
+        user.group = Group.find(0)
         user.allocated!
         TelegramClient.send_message(user.telegram_id,
                                     'Welcome fortunate one to the capitol')

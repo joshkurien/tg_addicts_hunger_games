@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
-  enum status: [:created, :registered, :intro_question, :allocated, :adding_text, :adding_intro_question, :district_description]
+  enum status: [:created, :registered, :intro_question, :allocated, :adding_text, :adding_intro_question, :group_description]
 
   validates_presence_of :telegram_id
-  belongs_to :district, optional: true
+  belongs_to :group, optional: true
   has_many :game_scores
 
   before_save :set_full_name
@@ -15,14 +15,14 @@ class User < ActiveRecord::Base
   end
 
   def intro_answer(data)
-    self[:status_metadata]['intro_questions']["#{data[:question]}"] = data[:district]
+    self[:status_metadata]['intro_questions']["#{data[:question]}"] = data[:group]
     save!
     if status_metadata['intro_questions'].count < IntroQuestion::REQUIRED_COUNT
       UserFlow.intro_questions(self)
       return
     end
 
-    allocate_district
+    allocate_group
   end
 
   def admin_actions
@@ -30,9 +30,9 @@ class User < ActiveRecord::Base
 
     TelegramClient.make_buttons(telegram_id,
                                 'Have fun Tinkering',
-                                [[Button::ADMIN_TEXT, Button::ADMIN_DISTRICT_QUESTION],
+                                [[Button::ADMIN_TEXT, Button::ADMIN_GROUP_QUESTION],
                                  [Button::ADMIN_LAST_10_GAMES, Button::ADMIN_VIEW_MISSING_PLAYERS],
-                                 [Button::ADMIN_DISTRICT_LEADERBOARD, Button::ADMIN_DISTRICT_DESC],
+                                 [Button::ADMIN_GROUP_LEADERBOARD, Button::ADMIN_GROUP_DESC],
                                  [Button::BACK]])
   end
 
@@ -105,10 +105,10 @@ class User < ActiveRecord::Base
                                 false)
   end
 
-  def view_district
-    if self.district.present?
+  def view_group
+    if self.group.present?
       TelegramClient.send_message(self.telegram_id,
-                                  self.district.description_string)
+                                  self.group.description_string)
       return
     end
     TelegramClient.send_message(self.telegram_id,
@@ -166,33 +166,33 @@ class User < ActiveRecord::Base
     user.update_score
   end
 
-  def allocate_district
-    district_weights = Array.new(District.count + 1, 0)
+  def allocate_group
+    group_weights = Array.new(Group.count + 1, 0)
     max_value = 0
 
-    status_metadata['intro_questions'].each do |question, district|
-      return false if district.nil?
-      district_weights[district] += 1
-      if district_weights[district] > max_value
-        max_value = district_weights[district]
+    status_metadata['intro_questions'].each do |question, group|
+      return false if group.nil?
+      group_weights[group] += 1
+      if group_weights[group] > max_value
+        max_value = group_weights[group]
       end
     end
 
-    highest_voted_districts = []
-    district_weights.each_with_index do |votes, district|
-      highest_voted_districts << district if (votes == max_value)
+    highest_voted_groups = []
+    group_weights.each_with_index do |votes, group|
+      highest_voted_groups << group if (votes == max_value)
     end
 
-    if highest_voted_districts.count == 1
-      self.district_id = highest_voted_districts[0]
+    if highest_voted_groups.count == 1
+      self.group_id = highest_voted_groups[0]
     else
-      self.district_id = District.least_populated_of(highest_voted_districts)
+      self.group_id = Group.least_populated_of(highest_voted_groups)
     end
 
     allocated!
 
     TelegramClient.make_buttons(telegram_id,
-                                "Congrats you're in #{self.district.name} #{self.district.symbol}",
+                                "Congrats you're in #{self.group.name} #{self.group.symbol}",
                                 Button.default_buttons,
                                 false)
   end

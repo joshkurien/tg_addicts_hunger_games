@@ -1,31 +1,31 @@
-class District < ActiveRecord::Base
+class Group < ActiveRecord::Base
   has_many :intro_question_options
   has_many :users
 
   POP_CAP_MAX_DIFFERENCE = 2
   def self.blocked
-    all_districts = District.where.not(id: 0)
-    smallest_district = District.find(least_populated_of(all_districts.map(&:id)))
-    least_population = smallest_district.users.count
+    all_groups = Group.where.not(id: 0)
+    smallest_group = Group.find(least_populated_of(all_groups.map(&:id)))
+    least_population = smallest_group.users.count
     blocked = []
-    all_districts.each do |district|
-      district_population = district.users.count
-      if (district_population - least_population) > POP_CAP_MAX_DIFFERENCE
-        blocked << district.id
+    all_groups.each do |group|
+      group_population = group.users.count
+      if (group_population - least_population) > POP_CAP_MAX_DIFFERENCE
+        blocked << group.id
       end
     end
     blocked
   end
 
-  def self.least_populated_of(district_list)
+  def self.least_populated_of(group_list)
     min_population = [9999,nil]
 
-    district_list.each do |district_id|
-      district = District.find(district_id)
-      population = district.users.count
+    group_list.each do |group_id|
+      group = Group.find(group_id)
+      population = group.users.count
       if min_population[0] > population
         min_population[0] = population
-        min_population[1] = district_id
+        min_population[1] = group_id
       end
     end
     min_population[1]
@@ -47,6 +47,6 @@ class District < ActiveRecord::Base
   end
 
   def description_string
-    "#{self.description}\nTo join your district click [#{symbol}#{self.name}#{symbol}](#{self.room_link})"
+    "#{self.description}\nTo join your group click [#{symbol}#{self.name}#{symbol}](#{self.room_link})"
   end
 end

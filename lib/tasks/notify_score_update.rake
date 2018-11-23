@@ -1,10 +1,10 @@
 namespace :notify do
   desc 'Rake task to notify users of leaderboards'
-  task district_leaderboard: :environment do
-    District.find_each do |district|
-      leaderboard_message = district.leaderboard
+  task group_leaderboard: :environment do
+    Group.find_each do |group|
+      leaderboard_message = group.leaderboard
 
-      district.users.each do |user|
+      group.users.each do |user|
         TelegramClient.send_message(user.telegram_id,
                                     leaderboard_message) if user.is_admin?
       end

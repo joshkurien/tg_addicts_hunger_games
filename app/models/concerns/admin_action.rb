@@ -1,5 +1,5 @@
 class AdminAction
-  CALLBACK_TYPE = 'admin_action'
+  CALLBACK_TYPE = 'admin_action'.freeze
 
   def self.add_text_prompt(user)
     return unless user.check_admin
@@ -25,11 +25,11 @@ class AdminAction
   end
 
 
-  def self.evaluate_text(user,text)
+  def self.evaluate_text(user, text)
 
     if user.adding_text?
       Response.create(key: user.status_metadata['editing_response'],
-      text: text)
+                      text: text)
       user.restore_status
       TelegramClient.make_buttons(user.telegram_id,
                                   'Thanks for the fun message',
@@ -38,53 +38,53 @@ class AdminAction
       return true
     end
 
-    if user.district_description?
-      district = user.district
-      district.description = text
-      district.save
+    if user.group_description?
+      group = user.group
+      group.description = text
+      group.save
       user.restore_status
       TelegramClient.make_buttons(user.telegram_id,
-                                  "#{district.symbol} Nice description, Victory to #{district.name} #{district.symbol}",
+                                  "#{group.symbol} Nice description, Victory to #{group.name} #{group.symbol}",
                                   Button.default_buttons,
                                   false)
       return true
     end
 
     if user.adding_intro_question?
-      districts = District.order(:id)
+      groups = Group.order(:id)
       if user.status_metadata['intro_question_state'] == 'question'
         question = IntroQuestion.create(text: text)
-        next_district = districts.first
-        user.status_metadata['intro_question_state'] = {question: question.id, district: next_district.id}
+        next_group = groups.first
+        user.status_metadata['intro_question_state'] = {question: question.id, group: next_group.id}
         user.save!
         TelegramClient.send_message(user.telegram_id,
-                                    "Please send option for #{next_district.name} District #{next_district.symbol} now")
+                                    "Please send option for #{next_group.name} Group #{next_group.symbol} now")
         return true
       end
 
-      case user.status_metadata['intro_question_state']['district']
-        when districts.first.id
-          IntroQuestionOption.create!(district: districts.first,
+      case user.status_metadata['intro_question_state']['group']
+        when groups.first.id
+          IntroQuestionOption.create!(group: groups.first,
                                       intro_question_id: user.status_metadata['intro_question_state']['question'],
                                       text: text)
-          next_district = districts.second
-        when districts.second.id
-          IntroQuestionOption.create!(district: districts.second,
+          next_group = groups.second
+        when groups.second.id
+          IntroQuestionOption.create!(group: groups.second,
                                       intro_question_id: user.status_metadata['intro_question_state']['question'],
                                       text: text)
-          next_district = districts.third
-        when districts.third.id
-          IntroQuestionOption.create!(district: districts.third,
+          next_group = groups.third
+        when groups.third.id
+          IntroQuestionOption.create!(group: groups.third,
                                       intro_question_id: user.status_metadata['intro_question_state']['question'],
                                       text: text)
-          next_district = districts.fourth
-        when districts.fourth.id
-          IntroQuestionOption.create!(district: districts.fourth,
+          next_group = groups.fourth
+        when groups.fourth.id
+          IntroQuestionOption.create!(group: groups.fourth,
                                       intro_question_id: user.status_metadata['intro_question_state']['question'],
                                       text: text)
-          next_district = districts.fifth
-        when districts.fifth.id
-          IntroQuestionOption.create!(district: districts.fifth,
+          next_group = groups.fifth
+        when groups.fifth.id
+          IntroQuestionOption.create!(group: groups.fifth,
                                       intro_question_id: user.status_metadata['intro_question_state']['question'],
                                       text: text)
           user.restore_status
@@ -95,10 +95,10 @@ class AdminAction
           return true
       end
 
-      user.status_metadata['intro_question_state']['district'] = next_district.id
+      user.status_metadata['intro_question_state']['group'] = next_group.id
       user.save!
       TelegramClient.send_message(user.telegram_id,
-                                  "Please send option for #{next_district.name} District #{next_district.symbol} now")
+                                  "Please send option for #{next_group.name} Group #{next_group.symbol} now")
 
 
       return true
@@ -110,23 +110,23 @@ class AdminAction
       user.status_metadata['previous_status'] = user.status
       user.adding_text!
       TelegramClient.send_message(user.telegram_id,
-      'Enter the text please')
+                                  'Enter the text please')
       return true
     end
 
     false
   end
 
-  def district_description(user)
+  def group_description(user)
     return unless user.check_admin
     user.status_metadata['previous_status'] = user.status
-    user.district_description!
+    user.group_description!
 
     TelegramClient.send_message(user.telegram_id,
-                                'Please enter the new description for *your* district')
+                                'Please enter the new description for *your* group')
   end
 
-  def view_battles(user,count = 10)
+  def view_battles(user, count = 10)
     games = WwGame.order(id: :desc).limit(count)
     message = "Summary of battles:\n"
     games.each do |game|
@@ -136,16 +136,16 @@ class AdminAction
                                 message)
   end
 
-  def view_district_leaderboard(user)
+  def view_group_leaderboard(user)
     return unless user.check_admin
-    district = user.district
-    if district.blank?
+    group = user.group
+    if group.blank?
       TelegramClient.send_message(user.telegram_id,
-                                  'You dont have a district you noob')
+                                  'You dont have a group you noob')
       return
     end
     TelegramClient.send_message(user.telegram_id,
-                                district.leaderboard)
+                                group.leaderboard)
   end
 
   def view_unknown_names(user)

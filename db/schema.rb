@@ -15,13 +15,6 @@ ActiveRecord::Schema.define(version: 2018_07_30_041043) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "districts", force: :cascade do |t|
-    t.string "name"
-    t.string "symbol"
-    t.string "room_link"
-    t.string "description"
-  end
-
   create_table "game_scores", force: :cascade do |t|
     t.bigint "ww_game_id"
     t.bigint "user_id"
@@ -33,11 +26,18 @@ ActiveRecord::Schema.define(version: 2018_07_30_041043) do
     t.index ["ww_game_id"], name: "index_game_scores_on_ww_game_id"
   end
 
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.string "symbol"
+    t.string "room_link"
+    t.string "description"
+  end
+
   create_table "intro_question_options", force: :cascade do |t|
     t.string "text"
-    t.bigint "district_id"
+    t.bigint "group_id"
     t.bigint "intro_question_id"
-    t.index ["district_id"], name: "index_intro_question_options_on_district_id"
+    t.index ["group_id"], name: "index_intro_question_options_on_group_id"
     t.index ["intro_question_id"], name: "index_intro_question_options_on_intro_question_id"
   end
 
@@ -74,13 +74,13 @@ ActiveRecord::Schema.define(version: 2018_07_30_041043) do
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
     t.jsonb "status_metadata"
-    t.bigint "district_id"
+    t.bigint "group_id"
     t.boolean "is_admin", default: false
     t.string "full_name"
     t.integer "score"
     t.integer "rank"
-    t.index ["district_id"], name: "index_users_on_district_id"
     t.index ["full_name"], name: "index_users_on_full_name", unique: true
+    t.index ["group_id"], name: "index_users_on_group_id"
   end
 
   create_table "ww_games", force: :cascade do |t|
@@ -91,5 +91,5 @@ ActiveRecord::Schema.define(version: 2018_07_30_041043) do
     t.index ["game_time"], name: "index_ww_games_on_game_time", unique: true
   end
 
-  add_foreign_key "users", "districts"
+  add_foreign_key "users", "groups"
 end

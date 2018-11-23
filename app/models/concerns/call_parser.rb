@@ -24,20 +24,20 @@ class CallParser
         user.view_score
       when Button::VIEW_GAME_COUNT
         user.view_game_count
-      when Button::DISTRICT
-        user.view_district
+      when Button::GROUP
+        user.view_group
       when Button::LEADERBOARD
         user.view_leaderboard
       when Button::ADMIN_TEXT
         AdminAction.add_text_prompt(user)
-      when Button::ADMIN_DISTRICT_QUESTION
+      when Button::ADMIN_GROUP_QUESTION
         AdminAction.add_intro_question(user)
       when Button::ADMIN_LAST_10_GAMES
         AdminAction.new.view_battles(user)
-      when Button::ADMIN_DISTRICT_DESC
-        AdminAction.new.district_description(user)
-      when Button::ADMIN_DISTRICT_LEADERBOARD
-        AdminAction.new.view_district_leaderboard(user)
+      when Button::ADMIN_GROUP_DESC
+        AdminAction.new.group_description(user)
+      when Button::ADMIN_GROUP_LEADERBOARD
+        AdminAction.new.view_group_leaderboard(user)
       when Button::ADMIN_VIEW_MISSING_PLAYERS
         AdminAction.new.view_unknown_names(user)
       else

@@ -5,19 +5,19 @@ class Button
   BACK = '◀️ Back'
 
   ADMIN_TEXT = 'Add more fun texts'
-  ADMIN_DISTRICT_QUESTION = 'Add a question for Districts'
+  ADMIN_GROUP_QUESTION = 'Add a question for Groups'
   ADMIN_LAST_10_GAMES = 'View last 10 games stored'
-  ADMIN_DISTRICT_DESC = 'Change district description'
-  ADMIN_DISTRICT_LEADERBOARD = 'View District leaderboard'
+  ADMIN_GROUP_DESC = 'Change group description'
+  ADMIN_GROUP_LEADERBOARD = 'View Group leaderboard'
   ADMIN_VIEW_MISSING_PLAYERS = 'Untracked player list'
 
   VIEW_STATS = '📊 My Games 📊'
   VIEW_GAME_COUNT = '📈Game Count📈'
-  DISTRICT = '🏤 My District 🏤'
+  GROUP = '🏤 My Group 🏤'
   VIEW_SCORE = '✨My Score💫'
   LEADERBOARD = '📈View Leaderboard🌟'
 
   def self.default_buttons
-    [[VIEW_STATS,VIEW_SCORE],[VIEW_GAME_COUNT,DISTRICT],[LEADERBOARD]]
+    [[VIEW_STATS,VIEW_SCORE],[VIEW_GAME_COUNT,GROUP],[LEADERBOARD]]
   end
 end
