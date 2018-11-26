@@ -5,15 +5,15 @@ class Button
   BACK = '◀️ Back'
 
   ADMIN_TEXT = 'Add more fun texts'
-  ADMIN_GROUP_QUESTION = 'Add a question for Groups'
+  ADMIN_GROUP_QUESTION = "Add a question for #{Figaro.env.group_name.pluralize}"
   ADMIN_LAST_10_GAMES = 'View last 10 games stored'
-  ADMIN_GROUP_DESC = 'Change group description'
-  ADMIN_GROUP_LEADERBOARD = 'View Group leaderboard'
+  ADMIN_GROUP_DESC = "Change #{Figaro.env.group_name} description"
+  ADMIN_GROUP_LEADERBOARD = "View #{Figaro.env.group_name} leaderboard"
   ADMIN_VIEW_MISSING_PLAYERS = 'Untracked player list'
 
   VIEW_STATS = '📊 My Games 📊'
   VIEW_GAME_COUNT = '📈Game Count📈'
-  GROUP = '🏤 My Group 🏤'
+  GROUP = "🏤 My #{Figaro.env.group_name} 🏤"
   VIEW_SCORE = '✨My Score💫'
   LEADERBOARD = '📈View Leaderboard🌟'
 

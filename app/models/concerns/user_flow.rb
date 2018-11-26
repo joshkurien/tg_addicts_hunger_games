@@ -1,6 +1,5 @@
 class UserFlow
   ADMIN_LIST = eval(Figaro.env.admin_list).freeze
-  CAPITOL_INVITATION_CALLBACK_TYPE = 'capitol_invitation'
 
   def self.process_registration(message_details, user)
     return smart_alek(user.telegram_id) unless user.created?
@@ -41,21 +40,6 @@ class UserFlow
     TelegramClient.make_inline_buttons(user.telegram_id,
                                        @question.text,
                                        option_buttons)
-  end
-
-  def capitol_invitation(data)
-    user = User.find(data[:user_id])
-    case data[:accept]
-      when false
-        inform_super_admins("#{user.full_name} refused to join capitol group")
-      when true
-        inform_super_admins("#{user.full_name} Accepted the capitol group")
-        user.group = Group.find(0)
-        user.allocated!
-        TelegramClient.send_message(user.telegram_id,
-                                    'Welcome fortunate one to the capitol')
-    end
-
   end
 
 

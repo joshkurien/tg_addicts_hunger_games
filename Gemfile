@@ -46,7 +46,7 @@ group :development do
   gem 'capistrano-rbenv'
   gem 'capistrano3-puma'
   gem 'capistrano-rails-console'
-  # gem 'sshkit-sudo'
+  gem 'sshkit-sudo'
 end
 
 

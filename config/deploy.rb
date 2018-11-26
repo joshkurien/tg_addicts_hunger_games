@@ -48,6 +48,15 @@ set :pty, true
 
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 
+namespace :debug do
+  desc 'Print ENV variables'
+  task :env do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute :printenv
+    end
+  end
+end
+
 # namespace :deploy do
 #   # make sure we're deploying what we think we're deploying
 #   before :deploy, "deploy:check_revision"
