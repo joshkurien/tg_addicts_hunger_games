@@ -11,11 +11,11 @@ set :keep_releases, 3
 
 set :puma_threads,    [4, 16]
 # Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/home/joshkurien/addicts_bot"
-set :puma_conf, "#{shared_path}/config/puma.rb"
+set :deploy_to, "/home/joshkurien/#{shared_path}"
+# set :puma_conf, "#{shared_path}/config/puma.rb"
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
 # Default value for :format is :airbrussh.
@@ -46,3 +46,17 @@ set :pty, true
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
+set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
+
+# namespace :deploy do
+#   # make sure we're deploying what we think we're deploying
+#   before :deploy, "deploy:check_revision"
+#   # only allow a deploy with passing tests to deployed
+#   before :deploy, "deploy:run_tests"
+#   after :finishing, 'deploy:cleanup'
+#
+#
+#   # As of Capistrano 3.1, the `deploy:restart` task is not called
+#   # automatically.
+#   after 'deploy:publishing', 'deploy:restart'
+# end

@@ -1,5 +1,5 @@
 class UserFlow
-  ADMIN_LIST = [159911854,255592545]
+  ADMIN_LIST = eval(Figaro.env.admin_list).freeze
   CAPITOL_INVITATION_CALLBACK_TYPE = 'capitol_invitation'
 
   def self.process_registration(message_details, user)

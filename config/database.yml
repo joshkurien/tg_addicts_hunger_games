@@ -28,7 +28,7 @@ development:
   <<: *default
 test:
   <<: *default
-  database: addicts_bot_test
+  database: sort_bot_test
 
 production:
   <<: *default
