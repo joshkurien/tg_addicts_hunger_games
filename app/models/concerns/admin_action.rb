@@ -58,7 +58,7 @@ class AdminAction
         user.status_metadata['intro_question_state'] = {question: question.id, group: next_group.id}
         user.save!
         TelegramClient.send_message(user.telegram_id,
-                                    "Please send option for #{next_group.name} Group #{next_group.symbol} now")
+                                    "Please send option for #{next_group.name} #{Figaro.env.group_name} #{next_group.symbol} now")
         return true
       end
 
@@ -80,11 +80,6 @@ class AdminAction
           next_group = groups.fourth
         when groups.fourth.id
           IntroQuestionOption.create!(group: groups.fourth,
-                                      intro_question_id: user.status_metadata['intro_question_state']['question'],
-                                      text: text)
-          next_group = groups.fifth
-        when groups.fifth.id
-          IntroQuestionOption.create!(group: groups.fifth,
                                       intro_question_id: user.status_metadata['intro_question_state']['question'],
                                       text: text)
           user.restore_status
@@ -119,11 +114,16 @@ class AdminAction
 
   def group_description(user)
     return unless user.check_admin
+    if group.blank?
+      TelegramClient.send_message(user.telegram_id,
+                                  "You dont have a #{Figaro.env.group_name} you noob")
+      return
+    end
     user.status_metadata['previous_status'] = user.status
     user.group_description!
 
     TelegramClient.send_message(user.telegram_id,
-                                'Please enter the new description for *your* group')
+                                "Please enter the new description for *your* #{Figaro.env.group_name}")
   end
 
   def view_battles(user, count = 10)
@@ -141,7 +141,7 @@ class AdminAction
     group = user.group
     if group.blank?
       TelegramClient.send_message(user.telegram_id,
-                                  'You dont have a group you noob')
+                                  "You dont have a #{Figaro.env.group_name} you noob")
       return
     end
     TelegramClient.send_message(user.telegram_id,

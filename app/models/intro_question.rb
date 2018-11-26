@@ -14,7 +14,7 @@ class IntroQuestion < ActiveRecord::Base
     intro_question_options.order('random()').each do |option|
       next if blocked_groups.include?(option.group_id)
       buttons << [{text: option.text,
-                   callback_data: "{type: '#{CALLBACK_TYPE}',question: #{self.id}, #{Figaro.env.group_name}: #{option.group_id}}"
+                   callback_data: "{type: '#{CALLBACK_TYPE}',question: #{self.id}, group: #{option.group_id}}"
                    }]
     end
     buttons

@@ -2,7 +2,7 @@ class Group < ActiveRecord::Base
   has_many :intro_question_options
   has_many :users
 
-  POP_CAP_MAX_DIFFERENCE = 2
+  POP_CAP_MAX_DIFFERENCE = Figaro.env.pop_cap_difference.to_i
   def self.blocked
     all_groups = Group.where.not(id: 0)
     smallest_group = Group.find(least_populated_of(all_groups.map(&:id)))
