@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_30_041043) do
+ActiveRecord::Schema.define(version: 2018_11_27_181028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2018_07_30_041043) do
     t.boolean "won"
     t.integer "score", default: 0
     t.string "name"
+    t.integer "telegram_id"
+    t.index ["telegram_id"], name: "index_game_scores_on_telegram_id"
     t.index ["user_id"], name: "index_game_scores_on_user_id"
     t.index ["ww_game_id"], name: "index_game_scores_on_ww_game_id"
   end
@@ -60,7 +62,9 @@ ActiveRecord::Schema.define(version: 2018_07_30_041043) do
   create_table "unknown_user_records", force: :cascade do |t|
     t.bigint "game_score_id"
     t.string "name"
+    t.integer "telegram_id"
     t.index ["game_score_id"], name: "index_unknown_user_records_on_game_score_id"
+    t.index ["telegram_id"], name: "index_unknown_user_records_on_telegram_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
              language: info[:language_code])
       TelegramClient.send_message(telegram_id,
                                   "Hi #{full_name}, your name information has been succesfully updated")
-      UnknownUserRecord.update_unknown(self.full_name, self.id)
+      UnknownUserRecord.update_unknown(self.telegram_id, self.id)
       update_score
     rescue ActiveRecord::RecordNotUnique
       TelegramClient.send_message(telegram_id,
@@ -70,9 +70,6 @@ class User < ActiveRecord::Base
     update(score: game_scores.map(&:score).sum)
   end
 
-  def total_score
-    score
-  end
 
   def view_stats
     games = self.game_scores.order(id: :desc)
@@ -163,7 +160,9 @@ class User < ActiveRecord::Base
                 first_name: info[:first_name], last_name: info[:last_name],
                 is_bot: info[:is_bot], language: info[:language_code],
                 status_metadata: {})
+    UnknownUserRecord.update_unknown(user.telegram_id, user.id)
     user.update_score
+    user
   end
 
   def allocate_group

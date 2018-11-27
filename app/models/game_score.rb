@@ -11,18 +11,18 @@ class GameScore < ActiveRecord::Base
   WIN_SCORE = 10
   LIFE_SCORE = 5
 
-  def insert_record(game_id, username, life_stat, victory_stat)
+  def insert_record(game_id, username, life_stat, victory_stat, tg_id)
     self.ww_game_id = game_id
     self.alive = (life_stat == ALIVE)
     self.won = (victory_stat == WON)
-    parsed_username = username.sub(/\ [🥇🥈🥉💎]+$/,'')
-    self.name = parsed_username
-    self.user = User.find_by_full_name(parsed_username)
+    self.name = username
+    self.telegram_id = tg_id
+    self.user = User.find_by_telegram_id(tg_id)
     self.process_score
 
     self.save!
     if self.user.blank?
-      UnknownUserRecord.create!(game_score: self, name: parsed_username)
+      UnknownUserRecord.create!(game_score: self, name: username, telegram_id: tg_id)
     else
       self.user.update_score
     end

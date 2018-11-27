@@ -11,7 +11,8 @@ class TelegramController < ApplicationController
     rescue => e
       UserFlow.new.inform_super_admins("Message from: #{ params[:message][:from][:first_name]}\nID: #{params[:message][:from][:id]}\n" +
                                            "Message: #{params[:message][:text]}\n" +
-                                           "\nError message:\n" + e.message)
+                                           "\nError message:\n" + e.message + "\nTrace:\n" +
+                                           e.backtrace[0] + "\n" + e.backtrace[1] )
     end
     render status: 200
   end
